@@ -14,7 +14,7 @@ namespace Лаба4.ООП
     {
         Bitmap bmp;
         Graphics graph;
-        Color basic_color = Color.DarkGray;
+        Color basic_color = Color.YellowGreen;
         int kolvo_elem = 0;
         int index = 0;
         static int sizeStorage = 1;
@@ -57,12 +57,12 @@ namespace Лаба4.ООП
             }
             return -1;
         }
-        private void MyPaint(int size,ref Storage storage)
+        private void MyPaint(int kolvo_elem,ref Storage storage)
         {
-            if(storage.objects[size-1]!= null)
+            if(storage.objects[kolvo_elem] != null)
             {
-                Pen pen = new Pen(storage.objects[size - 1].color, 4);
-                graph.DrawEllipse(pen, storage.objects[size-1 ].x, storage.objects[size-1 ].y, storage.objects[size-1 ].R * 2, storage.objects[size-1 ].R * 2);
+                Pen pen = new Pen(storage.objects[kolvo_elem].color, 4);
+                graph.DrawEllipse(pen, storage.objects[kolvo_elem].x, storage.objects[kolvo_elem].y, storage.objects[kolvo_elem].R * 2, storage.objects[kolvo_elem].R * 2);
                 picture.Image = bmp;
             }
         } 
@@ -71,7 +71,8 @@ namespace Лаба4.ООП
         {
             CCircle krug = new CCircle(e.X, e.Y,basic_color);
             storage.add_object(ref sizeStorage, ref krug, kolvo_elem, ref index_sozdania);
-            MyPaint(sizeStorage, ref storage) ;
+            MyPaint(index_sozdania, ref storage) ;
+            kolvo_elem++;
             picture.Image = bmp;
 
         }
