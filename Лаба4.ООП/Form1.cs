@@ -120,7 +120,14 @@ namespace Лаба4.ООП
                     return true;
                 else return false;
             }
-
+            public void Delte_obj(ref int kolvo_elem)
+            {
+                if (objects[kolvo_elem] != null)
+                {
+                    objects[kolvo_elem] = null;
+                    kolvo_elem--;
+                }
+            }
             
         }
     }

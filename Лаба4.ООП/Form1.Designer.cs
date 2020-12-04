@@ -34,6 +34,7 @@
             // 
             // picture
             // 
+            this.picture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.picture.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picture.Location = new System.Drawing.Point(0, 0);
             this.picture.Name = "picture";
