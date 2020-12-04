@@ -184,6 +184,37 @@ namespace Лаба4.ООП
         private void button1_Click(object sender, EventArgs e)
         {
             if(storage.kolvo_zanyatix(sizeStorage)!=0)
+                for (int i = 0; i < sizeStorage; i++)
+                    if (storage.proverka(i) == false && storage.objects[i].color == selected_color)
+                        storage.Delte_obj(ref i);
+                
+            button2_Click(sender, e);
+            button3_Click(sender, e);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            picture.Refresh();
+            for(int i = 0; i < sizeStorage; i++)
+            {
+                if (!storage.proverka(i))
+                {
+                    storage.objects[i].narisovana = false;
+                    storage.objects[i].color = basic_color;
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            picture.Refresh();
+            if (storage.kolvo_zanyatix(sizeStorage) != 0)
+                for (int i = 0; i < sizeStorage; ++i)
+                {
+                    MyPaint(i,ref storage); // Рисует круг
+                    if (!storage.proverka(i))
+                        storage.objects[i].narisovana = true; // Для элемента ставим флаг - нарисован
+                }
         }
     }
 }
