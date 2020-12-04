@@ -15,6 +15,7 @@ namespace Лаба4.ООП
         Bitmap bmp;
         Graphics graph;
         Color basic_color = Color.YellowGreen;
+        Color selected_color = Color.Red;
         int kolvo_elem = 0;
         int index = 0;
         static int sizeStorage = 1;
@@ -32,6 +33,7 @@ namespace Лаба4.ООП
             public int R=80;
             public Color color;
             public int x, y;
+            public bool narisovana = true;
             public CCircle(int x,int y,Color color)
             {
                 this.x = x-R;
@@ -66,14 +68,62 @@ namespace Лаба4.ООП
                 picture.Image = bmp;
             }
         } 
-
+        private void Remove_Selection(ref Storage storage)
+        {
+            for (int i = 0; i < sizeStorage; ++i)
+                if (!storage.proverka(i))
+                {
+                    storage.objects[i].color = basic_color;
+                    if (storage.objects[i].narisovana == true)
+                        MyPaint(i, ref storage);
+                }
+        }
         private void picture_MouseClick(object sender, MouseEventArgs e)
         {
             CCircle krug = new CCircle(e.X, e.Y,basic_color);
+            if (Check_In(ref storage, sizeStorage, krug.x, krug.y) != -1)
+            {
+                if (Control.ModifierKeys==Keys.Control)
+                {
+                    int x = e.X - krug.R;
+                    int y = e.Y - krug.R;
+                    for(int i = 0;i<sizeStorage;i++)
+                        if (!storage.proverka(i))
+                        {
+                            if ((x - storage.objects[i].x) * (x - storage.objects[i].x) + (y - storage.objects[i].y) * (y - storage.objects[i].y) <= storage.objects[i].R * storage.objects[i].R)
+                            {
+                                storage.objects[i].color = selected_color;
+                                MyPaint(i,ref storage);
+
+                            }
+                        }
+                }
+                else
+                {
+                    int x = e.X - krug.R;
+                    int y = e.Y - krug.R;
+                    Remove_Selection(ref storage);
+                    for(int i =0;i<sizeStorage;i++)
+                        if (!storage.proverka(i))
+                        {
+                            if ((x - storage.objects[i].x) * (x - storage.objects[i].x) + (y - storage.objects[i].y) * (y - storage.objects[i].y) <= storage.objects[i].R * storage.objects[i].R)
+                            {
+                                storage.objects[i].color = selected_color;
+                                MyPaint(i,ref storage);
+                                break;
+                            }
+                        }
+                    storage.objects[Check_In(ref storage, sizeStorage, krug.x, krug.y)].color=selected_color;
+                    MyPaint(Check_In(ref storage, sizeStorage, krug.x, krug.y), ref storage);
+                }
+                return;
+            }
             storage.add_object(ref sizeStorage, ref krug, kolvo_elem, ref index_sozdania);
+            Remove_Selection(ref storage);
+            storage.objects[index_sozdania].color = selected_color;
             MyPaint(index_sozdania, ref storage) ;
             kolvo_elem++;
-            picture.Image = bmp;
+            
 
         }
         public class Storage
@@ -129,6 +179,11 @@ namespace Лаба4.ООП
                 }
             }
             
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(storage.kolvo_zanyatix(sizeStorage)!=0)
         }
     }
 }
