@@ -12,8 +12,8 @@ namespace Лаба4.ООП
 {
     public partial class Form1 : Form
     {
-        Bitmap bmp;
-        Graphics graph;
+       // Bitmap bmp;
+      //  Graphics graph;
         Color basic_color = Color.YellowGreen;
         Color selected_color = Color.Red;
         int kolvo_elem = 0;
@@ -24,13 +24,13 @@ namespace Лаба4.ООП
         public Form1()
         {
             InitializeComponent();
-            bmp = new Bitmap(picture.Width, picture.Height);
-            graph = Graphics.FromImage(bmp);
+          //  bmp = new Bitmap(picture.Width, picture.Height);
+//graph = Graphics.FromImage(bmp);
         }
         public class CCircle
         {
             public bool painted = true;
-            public int R=80;
+            public int R=10;
             public Color color;
             public int x, y;
             public bool narisovana = true;
@@ -64,8 +64,8 @@ namespace Лаба4.ООП
             if(storage.objects[kolvo_elem] != null)
             {
                 Pen pen = new Pen(storage.objects[kolvo_elem].color, 4);
-                graph.DrawEllipse(pen, storage.objects[kolvo_elem].x, storage.objects[kolvo_elem].y, storage.objects[kolvo_elem].R * 2, storage.objects[kolvo_elem].R * 2);
-                picture.Image = bmp;
+                picture.CreateGraphics().DrawEllipse(pen, storage.objects[kolvo_elem].x, storage.objects[kolvo_elem].y, storage.objects[kolvo_elem].R * 2, storage.objects[kolvo_elem].R * 2);
+                
             }
         } 
         private void Remove_Selection(ref Storage storage)
@@ -195,7 +195,7 @@ namespace Лаба4.ООП
         private void button2_Click(object sender, EventArgs e)
         {
             picture.Refresh();
-            for(int i = 0; i < sizeStorage; i++)
+            for (int i = 0; i < sizeStorage; i++)
             {
                 if (!storage.proverka(i))
                 {
@@ -215,6 +215,15 @@ namespace Лаба4.ООП
                     if (!storage.proverka(i))
                         storage.objects[i].narisovana = true; // Для элемента ставим флаг - нарисован
                 }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            for(int i = 0; i < sizeStorage; i++)
+            {
+                storage.Delte_obj(ref i);
+            }
+            kolvo_elem = 0;
         }
     }
 }
